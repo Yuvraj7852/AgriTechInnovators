@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Application System</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        header {
+            background-color: #0056b3;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #16e927;
+        }
+
+        .success-message {
+            padding: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .error-message {
+            padding: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Internship Application System</h1>
+    </header>
+
+    <div class="container">
+        <h2>Apply for an Internship</h2>
+        <form id="applicationForm">
+            <!-- Internship Info (hidden from user) -->
+            <input type="hidden" id="internshipId" name="internshipId" value="12345">
+            <input type="hidden" id="internshipPosition" name="internshipPosition" value="Web Developer">
+
+            <!-- Personal Info -->
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="resume">Resume (PDF)</label>
+            <input type="file" id="resume" name="resume" accept=".pdf" required>
+
+            <!-- Cover Letter -->
+            <label for="coverLetter">Cover Letter</label>
+            <textarea id="coverLetter" name="coverLetter" required></textarea>
+
+            <button type="submit" class="button">Submit Application</button>
+        </form>
+    </div>
+
+    <div id="confirmationMessage" class="success-message" style="display: none;">
+        <p>Your application for the position of <strong>Web Developer</strong> has been successfully submitted!</p>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Internship Application System. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission and show confirmation message
+        const applicationForm = document.getElementById('applicationForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const formInputs = applicationForm.querySelectorAll('input, textarea');
+
+        applicationForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission to server for now
+
+            // Simulate an internship application submission process
+            const formData = new FormData(applicationForm);
+
+            // Example: Validate or send form data to a server (here we just simulate success)
+            let allFieldsFilled = true;
+            formInputs.forEach(input => {
+                if (!input.value) {
+                    allFieldsFilled = false;
+                }
+            });
+
+            // If form is valid, show confirmation message
+            if (allFieldsFilled) {
+                confirmationMessage.style.display = 'block';
+                applicationForm.reset(); // Reset form
+            } else {
+                alert("Please fill out all fields before submitting.");
+            }
+        });
+    </script>
+</body>
+</html>
