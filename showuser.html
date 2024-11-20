@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internship Application System</title>
+    <title>Internship Management System</title>
     <style>
         /* Basic Reset */
         * {
@@ -19,7 +19,7 @@
         }
 
         header {
-            background-color: #0056b3;
+            background-color: #017585;
             color: #fff;
             padding: 20px;
             text-align: center;
@@ -32,7 +32,7 @@
         .container {
             width: 80%;
             margin: 20px auto;
-            background-color: #fff;
+            background-color: #ecaeae;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             border-radius: 8px;
@@ -67,7 +67,7 @@
         }
 
         .button {
-            background-color: #0056b3;
+            background-color: #22911f;
             color: white;
             padding: 10px;
             border: none;
@@ -78,19 +78,26 @@
         }
 
         .button:hover {
-            background-color: #16e927;
+            background-color: #003c8a;
         }
 
-        .success-message {
-            padding: 15px;
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            border-radius: 6px;
-            text-align: center;
+        .preview-box {
             margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7fe;
+            border: 1px solid #bce0f0;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        .preview-box p {
+            margin: 8px 0;
+        }
+
+        .container{
+            background-color: #cfff82;
+            border:5px;
+        }
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -106,7 +113,8 @@
             border-radius: 6px;
             text-align: center;
             margin-top: 20px;
-            nav {
+        }
+        nav {
         background-color: #0056b3; /* Navbar background color */
         padding: 10px; /* Padding around the navbar */
         text-align: center; /* Center the links */
@@ -122,25 +130,24 @@
     }
 
     nav a:hover {
-        background-color: #4f83c7; /* Change color on hover */
+        background-color: #5b8fd3; /* Change color on hover */
     }
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Internship Application System</h1>
+        <h1>Internship Management System</h1>
     </header>
-   
+    <nav>
+        <a href="byuser.html">job publish</a>
+        <a href="byuser.html">user for Internship</a>
+        <a href="about.html">About Us</a>
+        <a href="signup.html">sign</a>
+    </nav>
+    
     <div class="container">
         <h2>Apply for an Internship</h2>
-       
         <form id="applicationForm">
-            <!-- Internship Info (hidden from user) -->
-            <input type="hidden" id="internshipId" name="internshipId" value="12345">
-            <input type="hidden" id="internshipPosition" name="internshipPosition" value="Web Developer">
-
-            <!-- Personal Info -->
             <label for="fullName">Full Name</label>
             <input type="text" id="fullName" name="fullName" required>
 
@@ -150,10 +157,16 @@
             <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" required>
 
+            <label for="position">Internship Position</label>
+            <select id="position" name="position" required>
+                <option value="webDev">Web Developer</option>
+                <option value="graphicDesign">Graphic Designer</option>
+                <option value="marketing">Marketing Intern</option>
+            </select>
+            
             <label for="resume">Resume (PDF)</label>
             <input type="file" id="resume" name="resume" accept=".pdf" required>
 
-            <!-- Cover Letter -->
             <label for="coverLetter">Cover Letter</label>
             <textarea id="coverLetter" name="coverLetter" required></textarea>
 
@@ -161,38 +174,64 @@
         </form>
     </div>
 
-    <div id="confirmationMessage" class="success-message" style="display: none;">
-        <p>Your application for the position of <strong>Web Developer</strong> has been successfully submitted!</p>
+    <div class="container">
+        <h2>Your Application Details</h2>
+        <div id="applicationPreview" class="preview-box" style="display: none;">
+            <p><strong>Full Name:</strong> <span id="previewFullName"></span></p>
+            <p><strong>Email:</strong> <span id="previewEmail"></span></p>
+            <p><strong>Phone Number:</strong> <span id="previewPhone"></span></p>
+            <p><strong>Position Applied:</strong> <span id="previewPosition"></span></p>
+            <p><strong>Cover Letter:</strong> <span id="previewCoverLetter"></span></p>
+        </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2024 Internship Application System. All Rights Reserved.</p>
+        <p>&copy; 2024 Internship Management System. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // JavaScript to handle form submission and show confirmation message
         const applicationForm = document.getElementById('applicationForm');
-        const confirmationMessage = document.getElementById('confirmationMessage');
-        const formInputs = applicationForm.querySelectorAll('input, textarea');
+        const applicationPreview = document.getElementById('applicationPreview');
+        const previewFullName = document.getElementById('previewFullName');
+        const previewEmail = document.getElementById('previewEmail');
+        const previewPhone = document.getElementById('previewPhone');
+        const previewPosition = document.getElementById('previewPosition');
+        const previewCoverLetter = document.getElementById('previewCoverLetter');
 
+        // Function to update the preview box with the user's data
+        function updatePreview() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const position = document.getElementById('internshipPosition').value;
+            const coverLetter = document.getElementById('coverLetter').value;
+
+            previewFullName.textContent = fullName;
+            previewEmail.textContent = email;
+            previewPhone.textContent = phone;
+            previewPosition.textContent = position;
+            previewCoverLetter.textContent = coverLetter;
+
+            // Show the preview box with the entered data
+            applicationPreview.style.display = 'block';
+        }
+
+        // Submit form handler
         applicationForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission to server for now
+            event.preventDefault(); // Prevent actual form submission
 
-            // Simulate an internship application submission process
-            const formData = new FormData(applicationForm);
-
-            // Example: Validate or send form data to a server (here we just simulate success)
-            let allFieldsFilled = true;
-            formInputs.forEach(input => {
-                if (!input.value) {
-                    allFieldsFilled = false;
+            // Check if all required fields are filled
+            const formFields = applicationForm.querySelectorAll('input, textarea');
+            let allFilled = true;
+            formFields.forEach((field) => {
+                if (!field.value) {
+                    allFilled = false;
                 }
             });
 
-            // If form is valid, show confirmation message
-            if (allFieldsFilled) {
-                confirmationMessage.style.display = 'block';
-                applicationForm.reset(); // Reset form
+            if (allFilled) {
+                updatePreview();  // Update the preview with user data
+                applicationForm.reset(); // Reset the form after preview
             } else {
                 alert("Please fill out all fields before submitting.");
             }
